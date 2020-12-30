@@ -79,8 +79,10 @@ class ElasticDataloader(object):
                 yield self._prepare_document_for_bulk(es_dataset, row, cnt)
 
     def _prepare_document_for_bulk(self, es_dataset, row, cnt):
-        row["_id"] = row.get(es_dataset.es_id_field, cnt +
-                             es_dataset.es_index_start_from)
+        size=20
+        chars=string.ascii_lowercase  + string.ascii_uppercase   + string.digits
+#        row["_id"] = row.get(es_dataset.es_id_field, cnt + es_dataset.es_index_start_from)
+        row["_id"] = ''.join(random.choice(chars) for _ in range(size))
         row["_index"] = es_dataset.es_index_name
         # row["_type"] = "_doc"
         return row
